@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Card from '../components/Card';
 import { TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
 export default function CharacterPage() {
     const [episodeNumber, setEpisodeNumber] = useState(1);
+    const inputRef = useRef(null); // Reference to the TextField
 
     const handleInputChange = (e) => {
-        setEpisodeNumber(e.target.value);
+        const value = e.target.value;
+        setEpisodeNumber(value);
     };
+
+    // Set focus on the TextField when the page loads
+    useEffect(() => {
+        if (episodeNumber === '') {
+            inputRef.current.focus(); // Focus on the TextField
+        }
+    }, [episodeNumber]); // Run this effect when the episode number changes
 
     // Custom-styled TextField
     const CustomTextField = styled(TextField)({
@@ -32,7 +41,7 @@ export default function CharacterPage() {
             },
         },
         marginBottom: '30px',
-        width: '50%', // Makes the input larger and centered
+        width: '50%',
     });
 
     return (
@@ -45,9 +54,10 @@ export default function CharacterPage() {
                 type="number"
                 value={episodeNumber}
                 onChange={handleInputChange}
+                inputRef={inputRef} // ref attribute to focus on the TextField
                 slotProps={{
                     htmlInput: {
-                        min: 1, // Ensuring the episode number stays above 1
+                        min: 1, // Minimum value allowed
                     },
                 }}
             />
