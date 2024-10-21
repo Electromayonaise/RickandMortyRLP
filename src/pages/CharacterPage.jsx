@@ -14,10 +14,9 @@ export default function CharacterPage() {
 
     // Set focus on the TextField when the page loads
     useEffect(() => {
-        if (episodeNumber === '') {
-            inputRef.current.focus(); // Focus on the TextField
-        }
-    }, [episodeNumber]); // Run this effect when the episode number changes
+        inputRef.current.focus(); // Focus on the TextField on every change
+    }, [episodeNumber]); // Run this effect whenever episodeNumber changes
+    
 
     // Custom-styled TextField
     const CustomTextField = styled(TextField)({
